@@ -1,28 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <h1 class="text-center">Add new campground</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds/makeNew" method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label">New Title : </label><input class="form-control" type="text"
+                        name="title" id="campground[title]" placeholder="New Title">
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location : </label><input class="form-control" type="text"
+                        name="location" id="campground[location]" placeholder="Location">
+                    <!-- <label for="state">State : </label><input type="text" name="state" id="state" placeholder="State"> -->
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image URL: </label><input class="form-control" type="text"
+                        name="image" id="campground[image]" placeholder="Image URL">
+                    <!-- <label for="state">State : </label><input type="text" name="state" id="state" placeholder="State"> -->
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description : </label><textarea class="form-control"
+                        name="description" id="campground[description]" placeholder="Description"></textarea>
+                    <!-- <label for="state">State : </label><input type="text" name="state" id="state" placeholder="State"> -->
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price : </label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">$</span>
+                        <input type="text" class="form-control" aria-label="price" name="price"
+                            id="campground[price]">
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Campground</title>
-</head>
 
-<body>
-    <form action="/campgrounds/makeNew" method="POST">
-        <div>
-            <label for="title">New Title : </label><input type="text" name="title" id="campground[title]" placeholder="New Title">
+                <div class="mb-3">
+                    <button class="btn btn-success">Add Campground</button>
+                </div>
+
+            </form>
+            <a href="/campgrounds">All campgrounds</a>
         </div>
-        <div>
-            <label for="location">Location : </label><input type="text" name="location" id="campground[location]" placeholder="Location">
-            <!-- <label for="state">State : </label><input type="text" name="state" id="state" placeholder="State"> -->
-        </div>
-        <button>Add Campground</button>
-    </form>
-    <footer>
-        <a href="/campgrounds">All campgrounds</a>
-    </footer>
 
-</body>
-
-</html>
+    </div>
