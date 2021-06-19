@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Campground</title>
+</head>
+
+<body>
+    <form action="/campgrounds/makeNew" method="POST">
+        <div>
+            <label for="title">New Title : </label><input type="text" name="title" id="campground[title]" placeholder="New Title">
+        </div>
+        <div>
+            <label for="location">Location : </label><input type="text" name="location" id="campground[location]" placeholder="Location">
+            <!-- <label for="state">State : </label><input type="text" name="state" id="state" placeholder="State"> -->
+        </div>
+        <button>Add Campground</button>
+    </form>
+    <footer>
+        <a href="/campgrounds">All campgrounds</a>
+    </footer>
+
+</body>
+
+</html>
