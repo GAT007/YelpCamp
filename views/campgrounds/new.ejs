@@ -2,32 +2,36 @@
     <div class="row">
         <h1 class="text-center">Add new campground</h1>
         <div class="col-6 offset-3">
-            <form action="/campgrounds/makeNew" method="POST">
+            <form action="/campgrounds/makeNew" method="POST" novalidate class="validatedForm">
                 <div class="mb-3">
                     <label for="title" class="form-label">New Title : </label><input class="form-control" type="text"
-                        name="title" id="campground[title]" placeholder="New Title">
+                        name="title" id="campground[title]" placeholder="New Title" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="location" class="form-label">Location : </label><input class="form-control" type="text"
-                        name="location" id="campground[location]" placeholder="Location">
+                        name="location" id="campground[location]" placeholder="Location" required>
                     <!-- <label for="state">State : </label><input type="text" name="state" id="state" placeholder="State"> -->
+
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image URL: </label><input class="form-control" type="text"
-                        name="image" id="campground[image]" placeholder="Image URL">
+                        name="image" id="campground[image]" placeholder="Image URL" required>
                     <!-- <label for="state">State : </label><input type="text" name="state" id="state" placeholder="State"> -->
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description : </label><textarea class="form-control"
-                        name="description" id="campground[description]" placeholder="Description"></textarea>
+                        name="description" id="campground[description]" placeholder="Description" required></textarea>
                     <!-- <label for="state">State : </label><input type="text" name="state" id="state" placeholder="State"> -->
                 </div>
                 <div class="mb-3">
                     <label for="price" class="form-label">Price : </label>
                     <div class="input-group mb-3">
                         <span class="input-group-text">$</span>
-                        <input type="text" class="form-control" aria-label="price" name="price"
-                            id="campground[price]">
+                        <input type="text" class="form-control" aria-label="price" name="price" id="campground[price]"
+                            required>
                         <span class="input-group-text">.00</span>
                     </div>
                 </div>

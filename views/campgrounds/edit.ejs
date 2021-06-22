@@ -2,29 +2,29 @@
     <div class="row">
         <h1 class="text-center">Edit <%=foundCampground.title%></h1>
         <div class="col-6 offset-3">
-            <form action="/campgrounds/<%=foundCampground._id%>?_method=PUT" method="POST">
+            <form action="/campgrounds/<%=foundCampground._id%>?_method=PUT" method="POST" novalidate class="validatedForm">
                 <div class="mb-3">
                     <label for="title" class="form-label">New Title : </label><input class="form-control" type="text"
-                        name="campground[title]" id="title" value="<%=foundCampground.title%>">
+                        name="campground[title]" id="title" value="<%=foundCampground.title%>" required>
                 </div>
                 <div class="mb-3">
                     <label for="location" class="form-label">Location : </label><input class="form-control" type="text"
-                        name="campground[location]" id="location" value="<%=foundCampground.location%>">
+                        name="campground[location]" id="location" value="<%=foundCampground.location%>" required>
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image URL: </label><input class="form-control" type="text"
-                        name="campground[image]" id="image" value="<%=foundCampground.image%>">
+                        name="campground[image]" id="image" value="<%=foundCampground.image%>" required>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description : </label><textarea class="form-control"
-                        name="campground[description]" id="description"><%=foundCampground.description%></textarea>
+                        name="campground[description]" id="description" required><%=foundCampground.description%></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="price" class="form-label">Price : </label>
                     <div class="input-group mb-3">
                         <span class="input-group-text">$</span>
                         <input type="text" class="form-control" aria-label="price" name="campground[price]"
-                            id="price" value="<%=foundCampground.price%>">
+                            id="price" value="<%=foundCampground.price%>" required>
                         <span class="input-group-text">.00</span>
                     </div>
                 </div>
@@ -40,3 +40,5 @@
         </div>
 
     </div>
+
+    
