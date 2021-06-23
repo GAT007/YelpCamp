@@ -6,7 +6,9 @@ const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync");
 const Campground = require("./models/campground");
 const ExpressError = require("./utils/ExpressError");
-const { vCampgroundSchema } = require("./vSchemas/vCampground");
+const { vCampgroundSchema, vReviewSchema } = require("./vSchemas/vCampground");
+const morgan = require("morgan");
+const review = require("./models/review");
 
 mongoose
     .connect("mongodb://localhost:27017/yelp-camp", {
@@ -35,6 +37,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(morgan('tiny'));
 
 const validateCampground = (req, res, next) => {
 
@@ -46,7 +49,19 @@ const validateCampground = (req, res, next) => {
     else {
         next();
     }
-    console.log(result);
+    //console.log(res);
+}
+
+const validateReview = (req, res, next) => {
+    const { error } = vReviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(",");
+        throw new ExpressError(msg, "500");
+    }
+    else {
+        next();
+    }
+    //console.log(res);
 }
 
 app.get("/", (req, res) => {
@@ -71,14 +86,27 @@ app.post("/campgrounds/makeNew", validateCampground, wrapAsync(async (req, res, 
 
 app.get('/campgrounds/:id', wrapAsync(async (req, res, next) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id);
+    const campground = await Campground.findById(id).populate('reviews');
+    //console.log(campground);
     res.render('campgrounds/show', { campground });
 }));
+
+
 
 app.get("/campgrounds/:id/edit", wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     const foundCampground = await Campground.findById(id);
     res.render("campgrounds/edit", { foundCampground });
+}));
+
+app.post("/campgrounds/:id/reviews", validateReview, wrapAsync(async (req, res, next) => {
+    let campground = await Campground.findById(req.params.id);
+    let newReview = new review(req.body.review);
+    campground.reviews.push(newReview);
+    await campground.save();
+    await newReview.save();
+    res.redirect(`/campgrounds/${campground._id}`);
+
 }));
 
 app.put("/campgrounds/:id", validateCampground, wrapAsync(async (req, res, next) => {
@@ -88,11 +116,20 @@ app.put("/campgrounds/:id", validateCampground, wrapAsync(async (req, res, next)
     res.redirect(`/campgrounds/${id}`);
 }));
 
+
+
 app.delete("/campgrounds/:id", wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
     res.redirect("/campgrounds");
 }));
+
+app.delete("/campground/:id/review/:reviewId", wrapAsync(async (req, res, next) => {
+    const { id, reviewId } = req.params;
+    Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await review.findByIdAndDelete(req.params.reviewId);
+    res.redirect(`/campgrounds/${id}`);
+}))
 
 app.all("*", (req, res, next) => {
     next(new ExpressError("Page not Found", 404));
