@@ -4,6 +4,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const Campground = require("../models/campground");
 const ExpressError = require("../utils/ExpressError");
 const { vCampgroundSchema } = require("../vSchemas/vCampground");
+const { isLoggedIn } = require("../utils/middleware");
 
 const validateCampground = (req, res, next) => {
 
@@ -23,11 +24,11 @@ router.get('/', wrapAsync(async (req, res, next) => {
     res.render('campgrounds/index', { campgrounds });
 }));
 
-router.get("/new", wrapAsync(async (req, res, next) => {
+router.get("/new", isLoggedIn, wrapAsync(async (req, res, next) => {
     res.render("campgrounds/new");
 }));
 
-router.post("/makeNew", validateCampground, wrapAsync(async (req, res, next) => {
+router.post("/makeNew", isLoggedIn, validateCampground, wrapAsync(async (req, res, next) => {
     //if (!req.body.campground) throw new ExpressError("Invalid Campground Data", 400);
     //console.log("Request body");
     //console.log(req.body);
@@ -50,7 +51,7 @@ router.get('/:id', wrapAsync(async (req, res, next) => {
     res.render('campgrounds/show', { campground });
 }));
 
-router.get("/:id/edit", wrapAsync(async (req, res, next) => {
+router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     const foundCampground = await Campground.findById(id);
     if (!foundCampground) {
@@ -60,7 +61,7 @@ router.get("/:id/edit", wrapAsync(async (req, res, next) => {
     res.render("campgrounds/edit", { foundCampground });
 }));
 
-router.put("/:id", validateCampground, wrapAsync(async (req, res, next) => {
+router.put("/:id", isLoggedIn, validateCampground, wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     console.log(req.body.campground);
     const updatedCampground = await Campground.findByIdAndUpdate(id, { ...req.body.campground }, { new: true });
