@@ -6,7 +6,7 @@ const { vReviewSchema } = require("../vSchemas/vCampground");
 const Review = require("../models/review");
 
 module.exports.isLoggedIn = (req, res, next) => {
-    console.log("Req User...", req.user);
+    //console.log("Req User...", req.user);
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;
         req.flash("error", "You must be signed in!");
