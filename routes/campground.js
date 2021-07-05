@@ -9,6 +9,7 @@ const { storage } = require("../cloudinary");
 const upload = multer({ storage });
 
 
+
 router.get('/', wrapAsync(campgrounds.index));
 
 router.get("/new", isLoggedIn, wrapAsync(campgrounds.new));
