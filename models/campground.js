@@ -10,6 +10,8 @@ const ImageSchema = new mongooseSchema({
 ImageSchema.virtual("thumbnail").get(function () {
     return this.url.replace("/upload", "/upload/w_200");
 })
+
+const opts = { toJSON: { virtuals: true } };
 const CampgroundSchema = new mongooseSchema({
     title: String,
     price: Number,
@@ -36,7 +38,13 @@ const CampgroundSchema = new mongooseSchema({
         ref: 'Review'
     }
     ]
-});
+}, opts);
+
+CampgroundSchema.virtual("properties.popUpMarkup").get(function () {
+    const hrefValue = `/campgrounds/${this.id}`;
+    const title = `<a href=${hrefValue}><h5>${this.title}</h5></a>`;
+    return title;
+})
 
 CampgroundSchema.post("findOneAndDelete", async function (campground) {
     if (campground.reviews.length) {

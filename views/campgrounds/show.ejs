@@ -130,8 +130,8 @@
         </div>
     </div>
     <script>
-        const mapToken = "<%=process.env.MAPBOX_TOKEN%>";
-        const campgroundTitle = "<%=campground.title%>";
-        const campgroundGeometry = "<%=campground.geometry.coordinates%>";
+        const mapToken = "<%-process.env.MAPBOX_TOKEN%>";
+        const campgroundTitle = "<%-campground.title%>";
+        const campgroundGeometry = "<%-campground.geometry.coordinates%>";
     </script>
     <script src="/javascripts/showPageMap.js"> </script>
