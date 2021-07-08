@@ -2,6 +2,8 @@
     <div class="row">
         <h1 class="text-center">Add new campground</h1>
         <div class="col-6 offset-3">
+            <div class="card shadow">
+                <div class="card-body">
             <form action="/campgrounds/makeNew" method="POST" novalidate class="validatedForm"
                 enctype="multipart/form-data">
                 <div class="mb-3">
@@ -44,7 +46,8 @@
                 <div class="mb-3">
                     <button class="btn btn-success">Add Campground</button>
                 </div>
-
+            </div>
+        </div>
             </form>
             <a href="/campgrounds">All campgrounds</a>
         </div>
